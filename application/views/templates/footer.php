@@ -56,6 +56,107 @@
 <!-- sweetalert 2 -->
 <script src="<?= base_url('assets') ?>/sweetalert2/sweetalert2.all.min.js"></script>
 <script src="<?= base_url('assets') ?>/js/myscript.js"></script>
+<script>
+    $('.form-check-input').on('click', function() {
+        const menuId = $(this).data('menu');
+        const roleId = $(this).data('role');
+
+        $.ajax({
+            url: "<?= base_url('admin/changeaccess'); ?>",
+            type: 'post',
+            data: {
+                menuId: menuId,
+                roleId: roleId
+            },
+            success: function() {
+                document.location.href = "<?= base_url('admin/roleaccess/'); ?>" + roleId;
+            }
+        });
+    });
+
+    $('.custom-file-input').on('change', function() {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });
+
+    document.getElementById('pw').onchange = function() {
+        document.getElementById('passwordfile').disabled = !this.checked;
+    };
+
+    $(document).ready(function() {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'colvis'
+            ]
+        });
+    });
+
+    //sweetalert
+    const flashData = $('.flash-data').data('flashdata');
+    // console.log(flashData);
+    if (flashData) {
+        Swal.fire({
+            title: flashData,
+            text: '',
+            icon: 'success'
+        });
+    }
+
+    //sw tombolhapus
+    $('.tombol-hapus').on('click', function(e) {
+        e.preventDefault();
+        const href = $(this).attr('href');
+        Swal.fire({
+            title: 'Are you sure to delete this file ?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                document.location.href = href;
+            }
+        })
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $('#fungsi').change(function() {
+            var id = $(this).val();
+            $.ajax({
+                url: "<?php echo site_url('Auth/get_bagian'); ?>",
+                method: "POST",
+                data: {
+                    id: id
+                },
+                async: true,
+                dataType: 'json',
+                success: function(data) {
+
+                    var html = '';
+                    var i;
+                    for (i = 0; i < data.length; i++) {
+                        html += '<option value=' + data[i].bagian_id + '>' + data[i].name + '</option>';
+                    }
+                    $('#bagian').html(html);
+
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#mytable').DataTable();
+    });
+</script>
 
 </body>
 

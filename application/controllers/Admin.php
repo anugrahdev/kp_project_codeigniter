@@ -8,13 +8,14 @@ class Admin extends CI_Controller
     {
         parent::__construct();
         is_login();
+        $this->load->model('usermanagement_model');
     }
     public function index()
     {
         $data['title'] = 'Dashboard';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
-        $data['count_user'] = $this->db->query("SELECT * FROM user")->num_rows();
+        $data['count_user'] = $this->db->query("SELECT * FROM user WHERE role_id=2")->num_rows();
         $data['count_documents'] = $this->db->query("SELECT * FROM document")->num_rows();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -82,5 +83,29 @@ class Admin extends CI_Controller
             $this->db->delete('user_access_menu', $data);
         }
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Access Changed!</div>');
+    }
+
+    public function user_management()
+    {
+        $data['title'] = 'User Management';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $data['user_data'] = $this->usermanagement_model->get_users();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/usermanagement', $data);
+        $this->load->view('templates/footer', $data);
+    }
+
+    public function delete($id)
+    {
+        $fileinfo = $this->usermanagement_model->delete($id);
+        $delete = $this->db->delete('user', array('id' => $id));
+        if ($delete) {
+            $this->session->set_flashdata('message', 'Document Successfully Deleted!');
+            redirect('admin/user_management');
+        }
     }
 }

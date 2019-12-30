@@ -5,7 +5,6 @@
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
     <div class="row">
         <div class="col-lg-6">
-
             <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-file-upload"></i> UPLOAD</a>
         </div>
     </div>
