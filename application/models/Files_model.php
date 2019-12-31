@@ -10,13 +10,13 @@ class Files_model extends CI_Model
 	public function getAllFiles()
 	{
 		$query = $this->db->get('document');
-		return $query->result();
+		return $query;
 	}
 
 	public function getFiles($uploader)
 	{
 		$query = $this->db->get_where('document', ['uploader' => $uploader]);
-		return $query->result();
+		return $query;
 	}
 
 	public function insertfile($file)
@@ -34,5 +34,11 @@ class Files_model extends CI_Model
 	{
 		$query = $this->db->get_where('document', array('id' => $id));
 		return $query->row_array();
+	}
+
+	function edit($deskriptsi, $password)
+	{
+		$hasil = $this->db->query("UPDATE document SET file_password='$password',description='$deskriptsi'");
+		return $hasil;
 	}
 }

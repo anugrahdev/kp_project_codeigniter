@@ -16,6 +16,7 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
         $data['count_user'] = $this->db->query("SELECT * FROM user WHERE role_id=2")->num_rows();
+        $data['count_admin'] = $this->db->query("SELECT * FROM user WHERE role_id=1")->num_rows();
         $data['count_documents'] = $this->db->query("SELECT * FROM document")->num_rows();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -107,5 +108,12 @@ class Admin extends CI_Controller
             $this->session->set_flashdata('message', 'Document Successfully Deleted!');
             redirect('admin/user_management');
         }
+    }
+
+    public function fungsibagian()
+    {
+        $data['title'] = 'Fungsi & Bagian Management';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
     }
 }

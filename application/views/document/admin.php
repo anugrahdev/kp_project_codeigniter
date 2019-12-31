@@ -25,7 +25,7 @@
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
-                    <?php foreach ($document as $m) : ?>
+                    <?php foreach ($document->result() as $m) : ?>
                         <tr>
                             <th scope="row"><?= $i; ?></th>
                             <td><?= $m->file_name;  ?></td>
@@ -34,6 +34,7 @@
                             <td>
                                 <a href="<?php echo base_url() . 'document/delete/' . $m->id; ?>" class="badge badge-danger tombol-hapus">DELETE</a>
                                 <a href="<?php echo base_url() . 'document/download/' . $m->id; ?>" class="badge badge-info">DOWNLOAD</a>
+                                <a href="<?php echo base_url() . 'document/view/' . $m->id; ?>" class="badge badge-success"><i class="fa fa-eye"></i></a>
                             </td>
                         </tr>
                         <?php $i++; ?>

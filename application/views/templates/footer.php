@@ -79,9 +79,6 @@
         $(this).next('.custom-file-label').addClass("selected").html(fileName);
     });
 
-    document.getElementById('pw').onchange = function() {
-        document.getElementById('passwordfile').disabled = !this.checked;
-    };
 
     $(document).ready(function() {
         $('#example').DataTable({
@@ -157,7 +154,27 @@
         $('#mytable').DataTable();
     });
 </script>
+<script>
+    function myFunction() {
+        var x = document.getElementById("myInput");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
 
+<script>
+    document.getElementById('pw').onchange = function() {
+        document.getElementById('passwordfile').disabled = !this.checked;
+    };
+</script>
+<script>
+    document.getElementById('pw_edit').onchange = function() {
+        document.getElementById('myInput').disabled = !this.checked;
+    };
+</script>
 </body>
 
 </html>

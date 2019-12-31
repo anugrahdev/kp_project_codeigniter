@@ -117,4 +117,24 @@ class Document extends CI_Controller
             redirect('document');
         }
     }
+    public function edit()
+    {
+        $deskripsi = $this->input->post('description');
+        $pw = $this->input->post('password');
+        $this->m_barang->edit_barang($pw, $deskripsi);
+        redirect('document');
+    }
+
+    public function view($id)
+    {
+        // The location of the PDF file 
+        // on the server 
+        $fileinfo = $this->files_model->download($id);
+        $file = 'assets/files/' . $fileinfo['file_name'];
+        // Header content type 
+        header("Content-type: application/pdf");
+        header("Content-Length: " . filesize($file));
+        // Send the file to the browser. 
+        readfile($file);
+    }
 }
