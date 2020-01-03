@@ -30,7 +30,7 @@
                             <td><?= $m->description;  ?></td>
                             <td>
 
-                                <a class="badge badge-warning" data-toggle="modal" data-target="#editmodal<?php echo $m->id; ?>"> EDIT</a>
+                                <!-- <a class="badge badge-warning" data-toggle="modal" data-target="#editmodal<?php echo $m->id; ?>"> EDIT</a> -->
                                 <a href="<?php echo base_url() . 'document/delete/' . $m->id; ?>" class="badge badge-danger tombol-hapus">DELETE</a>
                                 <a href="<?php echo base_url() . 'document/download/' . $m->id; ?>" class="badge badge-info">DOWNLOAD</a>
                                 <a href="<?php echo base_url() . 'document/view/' . $m->id; ?>" class="badge badge-success"><i class="fa fa-eye"></i></a>

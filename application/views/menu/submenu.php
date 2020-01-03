@@ -11,7 +11,7 @@
                 </div>
             <?php endif; ?>
             <?= form_error('menu', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-            <?= $this->session->flashdata('message'); ?>
+            <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
             <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">Add SubMenu</a>
             <table class="table table-hover">
                 <thead>
@@ -36,8 +36,8 @@
                             <td><?= $m['icon'];  ?></td>
                             <td><?= $m['is_active'];  ?></td>
                             <td>
-                                <a href="" class="badge badge-success">Edit</a>
-                                <a href="" class="badge badge-danger">Delete</a>
+                                <a class="badge badge-info" style="color: aliceblue" data-toggle="modal" data-target="#editmodal<?php echo $m['id']; ?>"> EDIT</a>
+                                <a href="<?php echo base_url() . 'menu/deletesubmenu/' . $m['id']; ?>" class="badge badge-danger tombol-hapus">Delete</a>
                             </td>
                         </tr>
                         <?php $i++; ?>

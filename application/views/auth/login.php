@@ -31,11 +31,3 @@
                     <div class="mt-2 text-muted text-center">
                         Don't have an account? <a href="<?= base_url('auth/registration'); ?>">Create One</a>
                     </div>
-                    <div class="simple-footer">
-                        Copyright &copy; Stisla 2018
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>

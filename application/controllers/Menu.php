@@ -61,7 +61,16 @@ class Menu extends CI_Controller
                 'is_active' => $this->input->post('is_active')
             ];
             $this->db->insert('user_sub_menu', $data);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sub Menu Added!</div>');
+            $this->session->set_flashdata('message', 'Sub Menu Added!');
+            redirect('menu/submenu');
+        }
+    }
+
+    public function deletesubmenu($id)
+    {
+        $delete = $this->db->delete('user_sub_menu', array('id' => $id));
+        if ($delete) {
+            $this->session->set_flashdata('message', 'Submenu has been Successfully Deleted!');
             redirect('menu/submenu');
         }
     }

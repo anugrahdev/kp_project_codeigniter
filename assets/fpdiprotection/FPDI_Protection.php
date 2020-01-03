@@ -238,10 +238,8 @@ class FPDI_Protection extends FPDI
             $out .= chr(ord($text{
                 $i}) ^ $k);
         }
-
         return $out;
     }
-
     /**
      * Get MD5 as binary string
      */
@@ -303,9 +301,7 @@ class FPDI_Protection extends FPDI
                     $value[2][1] = $this->_RC4($this->_objectkey($this->_currentObjId), $value[2][1]);
                 }
                 break;
-
             case pdf_parser::TYPE_HEX:
-
                 if ($this->encrypted) {
                     $value[1] = $this->hex2str($value[1]);
                     $value[1] = $this->_RC4($this->_objectkey($this->_currentObjId), $value[1]);

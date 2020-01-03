@@ -2,6 +2,7 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+    <h1 class="display-4" style="color: #006CB8">Welcome!</h1>
     <div class="row">
 
         <!-- Earnings (Monthly) Card Example -->
