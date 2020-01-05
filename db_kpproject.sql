@@ -3,9 +3,15 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
 -- Generation Time: Jan 05, 2020 at 02:44 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
+=======
+-- Generation Time: Jan 05, 2020 at 08:10 AM
+-- Server version: 10.1.35-MariaDB
+-- PHP Version: 7.2.9
+>>>>>>> 80a29301e8de560ac1fb9e55e9ac0f5e012048f6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -62,6 +68,7 @@ CREATE TABLE `document` (
 --
 
 INSERT INTO `document` (`id`, `file_name`, `description`, `file_password`, `uploader`) VALUES
+<<<<<<< HEAD
 (61, '353708671.pdf', 'tes', NULL, 'robihidayat@gmail.com'),
 (62, '35370867.pdf', 'tess password', '12345678', 'robihidayat@gmail.com'),
 (63, 'c3fef6f2b594a6f232aaec843f3caaac.pdf', 'trasd', NULL, 'robihidayat@gmail.com'),
@@ -69,6 +76,28 @@ INSERT INTO `document` (`id`, `file_name`, `description`, `file_password`, `uplo
 (65, 'dlscrib_com_algoritma-triple-des.pdf', 'triple des', '12345678', 'robihidayat@gmail.com'),
 (66, '115628-ID-steganografi-pada-citra-digital-mengguna.pdf', 'stegano citra digital', 'qwerty', 'robihidayat@gmail.com'),
 (67, 'Data_Encryption_Standard_(DES).pdf', 'DES', 'rahasia', 'robihidayat@gmail.com');
+=======
+(2, 'Anang_Nugraha_(09021381722106)_t4citra.pdf', 'Tugas 4 Citra', '', 'rizkinuriman@gmail.com'),
+(22, 'SRS_TUBES_PEMVIS_KELOMPOK_ANANG.pdf', 'SRS Pemvis', NULL, 'robihidayat@gmail.com'),
+(23, 'vue-sample.pdf', 'sample belajar Vue', NULL, 'robihidayat@gmail.com'),
+(24, 'laravel-sample.pdf', 'laravel tutorial sample', NULL, 'robihidayat@gmail.com'),
+(25, 'Anang_Nugraha_(09021381722106)_t4citra1.pdf', 'Tugas 4 Citra', '12345678', 'robihidayat@gmail.com'),
+(26, 'OACK_151225089.PDF', 'Seagate retur', '12345678', 'robihidayat@gmail.com'),
+(27, 'MuhammadAbiJody(09021381722146).pdf', 'Tugas Abi Jody', '12345678', 'bumbleprimes@gmail.com'),
+(28, 'contoh_kasus_EVM.pdf', 'EVM ', '12345678', 'bumbleprimes@gmail.com'),
+(29, 'Pertemuan_5_MANAJEMEN_WAKTU_PROYEK.pdf', 'MWP Pertemuan 5', '12345678', 'bumbleprimes@gmail.com'),
+(30, 'Pertemuan_10_MANAJEMEN_BIAYA_PROYEK.pdf', 'MPY pertemuan10', NULL, 'bumbleprimes@gmail.com'),
+(31, 'LKS_Jarkom_1.pdf', 'LKS Jarkom Satu', NULL, 'ridha@gmail.com'),
+(32, 'LKS_Jarkom_2.pdf', 'LKS Jarkom Dua', NULL, 'ridha@gmail.com'),
+(33, 'OACK_1512250891.PDF', 'Tes', 'qwerty', 'robihidayat@gmail.com'),
+(36, 'OACK_1512250894.PDF', 'OACK', NULL, 'bumbleprimes@gmail.com'),
+(37, 'OACK_1512250895.PDF', 'test', NULL, 'bumbleprimes@gmail.com'),
+(38, 'OACK_1512250896.PDF', 'OACK', '12345678', 'bumbleprimes@gmail.com'),
+(39, 'OACK_1512250897.PDF', '123', NULL, 'bumbleprimes@gmail.com'),
+(41, 'OACK_1512250892.PDF', 'Tes bae', NULL, 'robihidayat@gmail.com'),
+(42, 'OACK_1512250893.PDF', 'deskripsi', NULL, 'robihidayat@gmail.com'),
+(43, 'OACK_1512250898.PDF', 'tesss', NULL, 'robihidayat@gmail.com');
+>>>>>>> 80a29301e8de560ac1fb9e55e9ac0f5e012048f6
 
 -- --------------------------------------------------------
 
@@ -255,8 +284,12 @@ ALTER TABLE `bagian`
 -- Indexes for table `document`
 --
 ALTER TABLE `document`
+<<<<<<< HEAD
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `file_name` (`file_name`);
+=======
+  ADD PRIMARY KEY (`id`);
+>>>>>>> 80a29301e8de560ac1fb9e55e9ac0f5e012048f6
 
 --
 -- Indexes for table `fungsi`
@@ -314,7 +347,11 @@ ALTER TABLE `bagian`
 -- AUTO_INCREMENT for table `document`
 --
 ALTER TABLE `document`
+<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+=======
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+>>>>>>> 80a29301e8de560ac1fb9e55e9ac0f5e012048f6
 
 --
 -- AUTO_INCREMENT for table `fungsi`
