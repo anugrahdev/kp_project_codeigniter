@@ -968,6 +968,7 @@ function SetXY($x, $y)
 function Output($dest='', $name='', $isUTF8=false)
 {
 	// Output PDF to some destination
+	
 	$this->Close();
 	if(strlen($name)==1 && strlen($dest)!=1)
 	{
@@ -1883,4 +1884,3 @@ protected function _enddoc()
 	$this->state = 3;
 }
 }
-?>

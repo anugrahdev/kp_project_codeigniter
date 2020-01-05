@@ -67,10 +67,10 @@ class FPDI_Protection extends FPDI
         //Put the watermark
         //jarak kiri, 
         $this->SetFont('Arial', 'B', 10);
-        $this->SetTextColor(255, 192, 203);
+        $this->SetTextColor(192, 192, 192);
         $this->Image($this->rotatedText, 55, 90, 100, 110);
-        $this->RotatedText(20, 290, $this->uploader, 0);
-        $this->RotatedText(160, 290, $this->date, 0);
+        $this->RotatedText(23, 290, $this->uploader, 0);
+        $this->RotatedText(136, 290, $this->date, 0);
 
         // $this->RotatedText(60, 150, $this->rotatedText, 0);
         if ($this->fullPathToFile) {

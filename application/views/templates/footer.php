@@ -81,12 +81,7 @@
 
 
     $(document).ready(function() {
-        $('#example').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'colvis'
-            ]
-        });
+        $('#example').DataTable();
     });
 
     //sweetalert
@@ -169,6 +164,22 @@
     document.getElementById('pw').onchange = function() {
         document.getElementById('passwordfile').disabled = !this.checked;
     };
+</script>
+<script>
+    $(document).ready(function() {
+        $("#show_hide_password a").on('click', function(event) {
+            event.preventDefault();
+            if ($('#show_hide_password input').attr("type") == "text") {
+                $('#show_hide_password input').attr('type', 'password');
+                $('#show_hide_password i').addClass("fa-eye-slash");
+                $('#show_hide_password i').removeClass("fa-eye");
+            } else if ($('#show_hide_password input').attr("type") == "password") {
+                $('#show_hide_password input').attr('type', 'text');
+                $('#show_hide_password i').removeClass("fa-eye-slash");
+                $('#show_hide_password i').addClass("fa-eye");
+            }
+        });
+    });
 </script>
 <script>
     document.getElementById('pw_edit').onchange = function() {

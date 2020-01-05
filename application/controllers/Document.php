@@ -20,14 +20,14 @@ class Document extends CI_Controller
         $this->session->userdata('email')])->row_array();
 
         if ($this->session->userdata('role_id') == 1) {
-            $data['document'] = $this->files_model->getAllFiles()->result();
+            $data['document'] = $this->files_model->getAllFiles();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
             $this->load->view('document/admin', $data);
             $this->load->view('templates/footer', $data);
         } else {
-            $data['document'] = $this->files_model->getFiles($this->session->userdata('email'))->result();
+            $data['document'] = $this->files_model->getFiles($this->session->userdata('email'));
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
@@ -47,6 +47,7 @@ class Document extends CI_Controller
             $config['allowed_types'] = 'pdf';
             $config['file_name'] = $_FILES['upload']['name'];
 
+
             //Load upload library and initialize configuration
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
@@ -64,21 +65,22 @@ class Document extends CI_Controller
 
                     $query = $this->files_model->insertfile($file);
 
-                    $path = FCPATH . "assets/files/" . $filename;
-                    $watermarkText = FCPATH . 'assets/img/logo.png';
-                    $date = date('d/M/Y h:i:s a', time());
-                    $uploader = $this->session->userdata('name') . ' / ' . $this->session->userdata('email');
-                    $pdf = new FPDI_Protection($path, $watermarkText, $uploader, $date);
-                    $pdf->SetProtection(array(), $this->input->post('password'));
-                    $pdf->AddPage();
-                    $pdf->SetFont('Arial', '', 12);
-                    if ($pdf->numPages > 1) {
-                        for ($i = 2; $i <= $pdf->numPages; $i++) {
-                            $pdf->_tplIdx = $pdf->importPage($i);
-                            $pdf->AddPage();
-                        }
-                    }
-                    $pdf->Output($path, 'F');
+                    // $path = FCPATH . "assets/files/" . $filename;
+                    // $watermarkText = FCPATH . 'assets/img/logo.png';
+                    // date_default_timezone_set('Asia/Jakarta');
+                    // $date = date('d/M/Y h:i:s a');
+                    // $uploader = $this->session->userdata('name') . ' / ' . $this->session->userdata('email');
+                    // $pdf = new FPDI_Protection($path, $watermarkText, $uploader, $date);
+                    // $pdf->SetProtection(array(), $this->input->post('password'));
+                    // $pdf->AddPage();
+                    // $pdf->SetFont('Arial', '', 12);
+                    // if ($pdf->numPages > 1) {
+                    //     for ($i = 2; $i <= $pdf->numPages; $i++) {
+                    //         $pdf->_tplIdx = $pdf->importPage($i);
+                    //         $pdf->AddPage();
+                    //     }
+                    // }
+                    // $pdf->Output($path, 'F');
                 } catch (Exception $e) {
                     $this->session->set_flashdata('message', $e);
                     redirect('document');
@@ -107,6 +109,36 @@ class Document extends CI_Controller
         force_download($file, NULL);
     }
 
+    public function download_secure($filename)
+    {
+        $fileinfo = $this->files_model->getpassword($filename);
+        // $file = 'assets/files/' . $fileinfo['file_name'];
+        $path = FCPATH . "assets/files/" . $filename;
+        $watermarkText = FCPATH . 'assets/img/logogs.png';
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('d/M/Y h:i:s a');
+        $uploader = $this->session->userdata('name') . ' / ' . $this->session->userdata('email');
+        $pdf = new FPDI_Protection($path, $watermarkText, $uploader, $date);
+
+        $pfile = $fileinfo['file_password'];
+        if ($pfile != null) {
+            $pdf->SetProtection(array(), $pfile);
+        } else {
+            $pdf->SetProtection(array(), '');
+        }
+
+
+        $pdf->AddPage();
+        $pdf->SetFont('Arial', '', 12);
+        if ($pdf->numPages > 1) {
+            for ($i = 2; $i <= $pdf->numPages; $i++) {
+                $pdf->_tplIdx = $pdf->importPage($i);
+                $pdf->AddPage();
+            }
+        }
+        $pdf->Output($filename, 'D');
+    }
+
     public function delete($id)
     {
         $fileinfo = $this->files_model->delete($id);
@@ -126,16 +158,46 @@ class Document extends CI_Controller
         redirect('document');
     }
 
-    public function view($id)
+    // public function view($filename)
+    // {
+    //     // The location of the PDF file 
+    //     // on the server 
+    //     $fileinfo = $this->files_model->viewbyname($filename);
+    //     $file = 'assets/files/' . $fileinfo['file_name'];
+    //     // Header content type 
+    //     header("Content-type: application/pdf");
+    //     header("Content-Length: " . filesize($file));
+    //     // Send the file to the browser. 
+    //     readfile($file);
+    // }
+
+    public function view($filename)
     {
-        // The location of the PDF file 
-        // on the server 
-        $fileinfo = $this->files_model->download($id);
-        $file = 'assets/files/' . $fileinfo['file_name'];
-        // Header content type 
-        header("Content-type: application/pdf");
-        header("Content-Length: " . filesize($file));
-        // Send the file to the browser. 
-        readfile($file);
+        $fileinfo = $this->files_model->getpassword($filename);
+        // $file = 'assets/files/' . $fileinfo['file_name'];
+        $path = FCPATH . "assets/files/" . $filename;
+        $watermarkText = FCPATH . 'assets/img/logogs.png';
+        date_default_timezone_set('Asia/Jakarta');
+        $date = date('d/M/Y h:i:s a');
+        $uploader = $this->session->userdata('name') . ' / ' . $this->session->userdata('email');
+        $pdf = new FPDI_Protection($path, $watermarkText, $uploader, $date);
+
+        $pfile = $fileinfo['file_password'];
+        if ($pfile != null) {
+            $pdf->SetProtection(array(), $pfile);
+        } else {
+            $pdf->SetProtection(array(), '');
+        }
+
+
+        $pdf->AddPage();
+        $pdf->SetFont('Arial', '', 12);
+        if ($pdf->numPages > 1) {
+            for ($i = 2; $i <= $pdf->numPages; $i++) {
+                $pdf->_tplIdx = $pdf->importPage($i);
+                $pdf->AddPage();
+            }
+        }
+        $pdf->Output();
     }
 }

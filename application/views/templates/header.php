@@ -17,6 +17,9 @@
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url('assets') ?>/css/sb-admin-2.css" rel="stylesheet">
+    <link type="text/css" href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css' rel='stylesheet'>
+
+
     <!-- DATATABLE -->
     <!--Script CSS-->
     <link type="text/css" href='https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css' rel='stylesheet'>
