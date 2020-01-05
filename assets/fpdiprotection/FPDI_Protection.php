@@ -25,12 +25,13 @@ class FPDI_Protection extends FPDI
     public $fullPathToFile;
     public $rotatedText = '';
 
-    function __construct($fullPathToFile, $rotate_text)
+    function __construct($fullPathToFile, $rotate_text, $name, $dates)
     {
-        $this->fullPathToFile = $fullPathToFile;
-        if ($rotate_text)
-            $this->rotatedText = $rotate_text;
         parent::__construct();
+        $this->fullPathToFile = $fullPathToFile;
+        $this->rotatedText = $rotate_text;
+        $this->uploader = $name;
+        $this->date = $dates;
     }
 
     function Rotate($angle, $x = -1, $y = -1)
@@ -65,9 +66,12 @@ class FPDI_Protection extends FPDI
     {
         //Put the watermark
         //jarak kiri, 
-        $this->Image($this->rotatedText, 55, 90, 100, 110);
-        $this->SetFont('Arial', 'B', 30);
+        $this->SetFont('Arial', 'B', 10);
         $this->SetTextColor(255, 192, 203);
+        $this->Image($this->rotatedText, 55, 90, 100, 110);
+        $this->RotatedText(20, 290, $this->uploader, 0);
+        $this->RotatedText(160, 290, $this->date, 0);
+
         // $this->RotatedText(60, 150, $this->rotatedText, 0);
         if ($this->fullPathToFile) {
             if (is_null($this->_tplIdx)) {

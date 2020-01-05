@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
-                    <?php foreach ($document->result() as $m) : ?>
+                    <?php foreach ($document as $m) : ?>
                         <tr>
                             <th scope="row"><?= $i; ?></th>
                             <td><?= $m->file_name;  ?></td>
@@ -33,7 +33,7 @@
                                 <!-- <a class="badge badge-warning" data-toggle="modal" data-target="#editmodal<?php echo $m->id; ?>"> EDIT</a> -->
                                 <a href="<?php echo base_url() . 'document/delete/' . $m->id; ?>" class="badge badge-danger tombol-hapus">DELETE</a>
                                 <a href="<?php echo base_url() . 'document/download/' . $m->id; ?>" class="badge badge-info">DOWNLOAD</a>
-                                <a href="<?php echo base_url() . 'document/view/' . $m->id; ?>" class="badge badge-success"><i class="fa fa-eye"></i></a>
+                                <a href="<?php echo base_url() . 'document/view/' . $m->file_name; ?>" class="badge badge-success"><i class="fa fa-eye"></i></a>
                             </td>
                         </tr>
                         <?php $i++; ?>
@@ -48,51 +48,53 @@
 <!-- End of Main Content -->
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Upload PDF</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<?php foreach ($document as $dc) : ?>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Upload PDF</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="<?= base_url('document/insert'); ?>" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="upload" required>
+                                <label class="custom-file-label" for="image">Choose file</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Description" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input type="checkbox" id="pw" name="pw">
+                                <label for="pw" class="form-check-label">Protect file with password ?</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="password" placeholder="Password" id="passwordfile" disabled>
+                            <input type="hidden" value="<?= $user['email'] ?>" name="uploader">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="submit" class="btn btn-primary">Upload</button>
+                    </div>
+                </form>
             </div>
-
-            <form action="<?= base_url('document/insert'); ?>" method="post" enctype="multipart/form-data">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="upload" required>
-                            <label class="custom-file-label" for="image">Choose file</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Description" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input type="checkbox" id="pw" name="pw">
-                            <label for="pw" class="form-check-label">Protect file with password ?</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" name="password" placeholder="Password" id="passwordfile" disabled>
-                        <input type="hidden" value="<?= $user['email'] ?>" name="uploader">
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" name="submit" class="btn btn-primary">Upload</button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
-
+<?php endforeach; ?>
 
 <!-- Modal -->
-<?php foreach ($document->result() as $dc) : ?>
+<?php foreach ($document as $dc) : ?>
     <div class="modal fade" id="editmodal<?php echo $dc->id; ?>" tabindex="-1" role="dialog" aria-labelledby="editmodalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

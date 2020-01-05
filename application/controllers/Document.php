@@ -20,14 +20,14 @@ class Document extends CI_Controller
         $this->session->userdata('email')])->row_array();
 
         if ($this->session->userdata('role_id') == 1) {
-            $data['document'] = $this->files_model->getAllFiles();
+            $data['document'] = $this->files_model->getAllFiles()->result();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
             $this->load->view('document/admin', $data);
             $this->load->view('templates/footer', $data);
         } else {
-            $data['document'] = $this->files_model->getFiles($this->session->userdata('email'));
+            $data['document'] = $this->files_model->getFiles($this->session->userdata('email'))->result();
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
@@ -52,7 +52,6 @@ class Document extends CI_Controller
             $this->upload->initialize($config);
 
             if ($this->upload->do_upload('upload')) {
-
                 try {
                     $uploadData = $this->upload->data();
                     $filename = $uploadData['file_name'];
@@ -67,8 +66,10 @@ class Document extends CI_Controller
 
                     $path = FCPATH . "assets/files/" . $filename;
                     $watermarkText = FCPATH . 'assets/img/logo.png';
-                    $pdf = new FPDI_Protection($path, $watermarkText);
-                    $pdf->SetProtection(array('print'), $this->input->post('password'));
+                    $date = date('d/M/Y h:i:s a', time());
+                    $uploader = $this->session->userdata('name') . ' / ' . $this->session->userdata('email');
+                    $pdf = new FPDI_Protection($path, $watermarkText, $uploader, $date);
+                    $pdf->SetProtection(array(), $this->input->post('password'));
                     $pdf->AddPage();
                     $pdf->SetFont('Arial', '', 12);
                     if ($pdf->numPages > 1) {
