@@ -11,7 +11,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon">
-            <img src="<?= base_url('assets/'); ?>img/lgoo1.png" width="50px" height="50px" class="logo">
+            <img src="<?= base_url('assets/'); ?>img/whitelogo.png" width="50px" height="50px" class="logo">
         </div>
         <div class="sidebar-brand-text mx-3">PERTAMINA</div>
 

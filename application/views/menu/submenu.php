@@ -116,7 +116,17 @@
                 <form action="<?= base_url('menu/edit_menu/') . $m['id']; ?> " method="post">
                     <div class="modal-body">
                         <div class="form-group">
+
+                            <input type="text" class="form-control" id="menu" name="menu" placeholder="Role" value="<?= $m['title'] ?>">
+                        </div>
+                        <div class="form-group">
                             <input type="text" class="form-control" id="menu" name="menu" placeholder="Role" value="<?= $m['menu'] ?>">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="menu" name="menu" placeholder="Role" value="<?= $m['url'] ?>">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="menu" name="menu" placeholder="Role" value="<?= $m['icon'] ?>">
                         </div>
                     </div>
 
