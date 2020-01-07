@@ -111,7 +111,7 @@
                             <div class="input-group" id="show_hide_password">
                                 <input class="form-control" type="password" value=<?= $m->file_password; ?>>
                                 <div class="input-group-addon">
-                                    <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                    <a href=""><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                         </div>

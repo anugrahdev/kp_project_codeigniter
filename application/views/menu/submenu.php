@@ -53,8 +53,6 @@
 
 <!-- modal -->
 <!-- Button trigger modal -->
-
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -100,3 +98,34 @@
         </div>
     </div>
 </div>
+
+
+<?php foreach ($subMenu as $m) : ?>
+
+    <!-- Modal Edit -->
+    <div class="modal fade" id="editmodal<?= $m['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Role</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="<?= base_url('menu/edit_menu/') . $m['id']; ?> " method="post">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="menu" name="menu" placeholder="Role" value="<?= $m['menu'] ?>">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>

@@ -26,9 +26,23 @@ class Menu extends CI_Controller
             $this->load->view('templates/footer', $data);
         } else {
             $this->db->insert('user_menu', ['menu' => $this->input->post('menu')]);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Menu Added!</div>');
+            $this->session->set_flashdata('message', 'Menu Added!');
             redirect('menu');
         }
+    }
+
+    public function edit_menu($id)
+    {
+        $menu = $this->input->post('menu');
+        $this->db->set('menu', $menu);
+        $this->db->where('id', $id);
+        $this->db->update('user_menu');
+        $this->session->set_flashdata('message', 'Menu Edited!');
+        redirect('menu/');
+    }
+
+    public function edit_submenu($id)
+    {
     }
 
     public function subMenu()
@@ -63,6 +77,15 @@ class Menu extends CI_Controller
             $this->db->insert('user_sub_menu', $data);
             $this->session->set_flashdata('message', 'Sub Menu Added!');
             redirect('menu/submenu');
+        }
+    }
+
+    public function deletemenu($id)
+    {
+        $delete = $this->db->delete('user_menu', array('id' => $id));
+        if ($delete) {
+            $this->session->set_flashdata('message', 'Menu has been Successfully Deleted!');
+            redirect('menu/');
         }
     }
 
