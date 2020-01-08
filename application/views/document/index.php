@@ -110,61 +110,20 @@
                 </button>
             </div>
 
-            <form action="<?= base_url('document/insert'); ?>" method="post" enctype="multipart/form-data">
+            <form action="<?= base_url('document/multiple'); ?>" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <div class="row">
-                        <!-- <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="upload[]" required>
-                                    <label class="custom-file-label" for="upload">Choose file</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <input class="form-control" type="text" name="description" id="description" placeholder="Description">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="input-group" id="show_hide_password">
-                                <input class="form-control" type="password" id="passwordfile" name="password" placeholder="Enter password">
-                                <div class="input-group-addon">
-                                    <a href=""><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <button type="button" name="add" id="add" class="btn btn-success">Add More</button>
-                        </div> -->
-                        <div class="table-responsive">
-                            <form name="add_name" id="add_name">
-                                <table class="table table-borderless" id="dynamic_field">
-                                    <tr>
-                                        <td>
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input name_list" name="upload[]" required>
-                                                <label class="custom-file-label" for="upload">Choose file</label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input class="form-control name_list" type="text" name="description[]" id="description" placeholder="Description">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="input-group" id="show_hide_password">
-                                                <input class="form-control name_list" type="password" id="passwordfile" name="password[]" placeholder="Enter password">
-                                                <div class="input-group-addon">
-                                                    <a href=""><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>
-                                    </tr>
-                                </table>
-                            </form>
-                        </div>
+
+                    <div class="table-responsive">
+                        <table id="employee_table">
+                            <tr id="row1">
+                                <td><input type="text" name="file_name[]" placeholder="Enter Name"></td>
+                                <td><input type="text" name="description[]" placeholder="Enter Age"></td>
+                                <td><input type="text" name="file_password[]" placeholder="Enter Job"></td>
+                                <td><input type="hidden" name="uploader" placeholder="Enter Job" value="Anang"></td>
+                            </tr>
+                        </table>
+                        <input type="button" onclick="add_row();" value="ADD ROW">
+                        <input type="submit" name="submit_row" value="SUBMIT">
                     </div>
                 </div>
                 <div class="modal-footer">

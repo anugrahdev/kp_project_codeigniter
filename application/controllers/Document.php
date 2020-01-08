@@ -84,47 +84,13 @@ class Document extends CI_Controller
 
     public function multiple()
     {
-        $number = count($_POST["description"]);
-        if ($number > 0) {
-            for ($i = 0; $i < $number; $i++) {
-                if (trim($_POST["description"][$i] != '')) {
-                    $config['upload_path'] = 'assets/files';
-                    //restrict uploads to this mime types
-                    $config['allowed_types'] = 'pdf';
-                    $config['max_size'] = '100000';
-                    $config['file_name'] = $_FILES['upload']['name'];
-                    //Load upload library and initialize configuration
-                    $this->load->library('upload', $config);
-                    $this->upload->initialize($config);
+        $pass = $_POST['file_password'];
+        $desc = $_POST['description'];
+        $name = $_POST['file_name'];
+        $uploader = 'anang';
 
-                    if ($this->upload->do_upload('upload')) {
-                        try {
-                            $uploadData = $this->upload->data();
-                            $filename = $uploadData['file_name'];
-                            //set file data to insert to database
-                            $file['file_password'] = $this->input->post('password');
-                            $file['description'] = $this->input->post('description');
-                            $file['file_name'] = $filename;
-                            $file['uploader'] = $this->input->post('uploader');
-                            $query = $this->files_model->insertfile($file);
-                        } catch (Exception $e) {
-                            $this->session->set_flashdata('message', $e);
-                            redirect('document');
-                        }
-                        if ($query) {
-                            $this->session->set_flashdata('message', 'Document Successfully Uploaded!');
-                            redirect('document');
-                        } else {
-                            $this->session->set_flashdata('message', 'File uploaded but not inserted to database');
-                            redirect('document');
-                        }
-                    } else {
-                        $this->session->set_flashdata('message', 'Cannot upload file');
-                        redirect('document');
-                    }
-                }
-            }
-            echo "Data Inserted";
+        for ($i = 0; $i < count($name); $i++) {
+            $this->db->query("insert into document (file_name,description,file_password,uploader) values('$name[$i]','$desc[$i]','$pass[$i]','$uploader')");
         }
     }
 
