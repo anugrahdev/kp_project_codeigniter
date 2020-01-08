@@ -9648,6 +9648,9 @@ button.bg-dark:focus {
 	.px-lg-2 {
 		padding-right: 0.5rem !important;
 	}
+	.modal-lg {
+    max-width: 80% !important;
+}
 
 	.pb-lg-2,
 	.py-lg-2 {

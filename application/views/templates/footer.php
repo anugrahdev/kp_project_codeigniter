@@ -186,6 +186,32 @@
         document.getElementById('myInput').disabled = !this.checked;
     };
 </script>
+
+<script>
+    $(document).ready(function() {
+        var i = 1;
+        $('#add').click(function() {
+            i++;
+            $('#dynamic_field').append('<tr id="row' + i + '"><td><div class="custom-file"><input type="file" class="custom-file-input name_list" name="upload[]" required><label class="custom-file-label" for="upload">Choose file</label></div></td><td><div class="form-group"><input class="form-control name_list" type="text" name="description" id="description" placeholder="Description"></div></td><td><div class="input-group" id="show_hide_password"><input class="form-control name_list" type="password" id="passwordfile" name="password" placeholder="Enter password"> <div class="input-group-addon"><a href=""><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></a></div></div> </td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td></tr>');
+        });
+        $(document).on('click', '.btn_remove', function() {
+            var button_id = $(this).attr("id");
+            $('#row' + button_id + '').remove();
+        });
+        $('#submit').click(function() {
+            $.ajax({
+                url: "<?= base_url('document/multiple'); ?>",
+                method: "POST",
+                data: $('#add_name').serialize(),
+                success: function(data) {
+                    alert(data);
+                    $('#add_name')[0].reset();
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 
 </html>

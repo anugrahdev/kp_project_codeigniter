@@ -284,8 +284,7 @@ class Auth extends CI_Controller
 
         $this->form_validation->set_rules('password1', 'Password', 'trim|required|min_length[3]|matches[password2]');
         $this->form_validation->set_rules('password2', 'Password', 'trim|required|min_length[3]|matches[password1]');
-        if ($this->form->form_validation->run() == false) {
-
+        if ($this->form_validation->run() == false) {
             $data['title'] = 'Change Password';
             $this->load->view('templates/auth/auth_header', $data);
             $this->load->view('auth/change-password');

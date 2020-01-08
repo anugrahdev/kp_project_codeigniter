@@ -6,6 +6,7 @@
     <div class="row">
         <div class="col-lg-6">
             <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-file-upload"></i> UPLOAD</a>
+            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#multiupload"><i class="fas fa-file-upload"></i> MULTI UPLOAD</a>
         </div>
     </div>
 
@@ -65,7 +66,7 @@
                     <div class="form-group">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="upload" required>
-                            <label class="custom-file-label" for="image">Choose file</label>
+                            <label class="custom-file-label" for="upload">Choose file</label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -77,15 +78,98 @@
                             <label for="pw" class="form-check-label">Protect file with password ?</label>
                         </div>
                     </div>
+                    <div class="input-group" id="show_hide_password">
+                        <input class="form-control" type="password" id="passwordfile" name="password" placeholder="Enter password" disabled>
+                        <div class="input-group-addon">
+                            <a href=""><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" name="password" placeholder="Password" id="passwordfile" disabled>
                         <input type="hidden" value="<?= $user['email'] ?>" name="uploader">
                     </div>
+                    <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-file-upload"></i> MULTI UPLOAD</a>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" name="submit" class="btn btn-primary">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL MULTI UPLOAD -->
+<div class="modal fade" id="multiupload" tabindex="-1" role="dialog" aria-labelledby="multiuploadLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="multiuploadLabel">Upload PDF</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="<?= base_url('document/insert'); ?>" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="upload[]" required>
+                                    <label class="custom-file-label" for="upload">Choose file</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="description" id="description" placeholder="Description">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group" id="show_hide_password">
+                                <input class="form-control" type="password" id="passwordfile" name="password" placeholder="Enter password">
+                                <div class="input-group-addon">
+                                    <a href=""><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" name="add" id="add" class="btn btn-success">Add More</button>
+                        </div> -->
+                        <div class="table-responsive">
+                            <form name="add_name" id="add_name">
+                                <table class="table table-borderless" id="dynamic_field">
+                                    <tr>
+                                        <td>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input name_list" name="upload[]" required>
+                                                <label class="custom-file-label" for="upload">Choose file</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input class="form-control name_list" type="text" name="description[]" id="description" placeholder="Description">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group" id="show_hide_password">
+                                                <input class="form-control name_list" type="password" id="passwordfile" name="password[]" placeholder="Enter password">
+                                                <div class="input-group-addon">
+                                                    <a href=""><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="submit" id="submit" class="btn btn-primary">Upload</button>
                 </div>
             </form>
         </div>

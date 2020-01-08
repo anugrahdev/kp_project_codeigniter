@@ -45,9 +45,8 @@ class Document extends CI_Controller
             $config['upload_path'] = 'assets/files';
             //restrict uploads to this mime types
             $config['allowed_types'] = 'pdf';
+            $config['max_size'] = '100000';
             $config['file_name'] = $_FILES['upload']['name'];
-
-
             //Load upload library and initialize configuration
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
@@ -56,31 +55,12 @@ class Document extends CI_Controller
                 try {
                     $uploadData = $this->upload->data();
                     $filename = $uploadData['file_name'];
-
                     //set file data to insert to database
                     $file['file_password'] = $this->input->post('password');
                     $file['description'] = $this->input->post('description');
                     $file['file_name'] = $filename;
                     $file['uploader'] = $this->input->post('uploader');
-
                     $query = $this->files_model->insertfile($file);
-
-                    // $path = FCPATH . "assets/files/" . $filename;
-                    // $watermarkText = FCPATH . 'assets/img/logo.png';
-                    // date_default_timezone_set('Asia/Jakarta');
-                    // $date = date('d/M/Y h:i:s a');
-                    // $uploader = $this->session->userdata('name') . ' / ' . $this->session->userdata('email');
-                    // $pdf = new FPDI_Protection($path, $watermarkText, $uploader, $date);
-                    // $pdf->SetProtection(array(), $this->input->post('password'));
-                    // $pdf->AddPage();
-                    // $pdf->SetFont('Arial', '', 12);
-                    // if ($pdf->numPages > 1) {
-                    //     for ($i = 2; $i <= $pdf->numPages; $i++) {
-                    //         $pdf->_tplIdx = $pdf->importPage($i);
-                    //         $pdf->AddPage();
-                    //     }
-                    // }
-                    // $pdf->Output($path, 'F');
                 } catch (Exception $e) {
                     $this->session->set_flashdata('message', $e);
                     redirect('document');
@@ -101,6 +81,53 @@ class Document extends CI_Controller
             redirect('document');
         }
     }
+
+    public function multiple()
+    {
+        $number = count($_POST["description"]);
+        if ($number > 0) {
+            for ($i = 0; $i < $number; $i++) {
+                if (trim($_POST["description"][$i] != '')) {
+                    $config['upload_path'] = 'assets/files';
+                    //restrict uploads to this mime types
+                    $config['allowed_types'] = 'pdf';
+                    $config['max_size'] = '100000';
+                    $config['file_name'] = $_FILES['upload']['name'];
+                    //Load upload library and initialize configuration
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
+
+                    if ($this->upload->do_upload('upload')) {
+                        try {
+                            $uploadData = $this->upload->data();
+                            $filename = $uploadData['file_name'];
+                            //set file data to insert to database
+                            $file['file_password'] = $this->input->post('password');
+                            $file['description'] = $this->input->post('description');
+                            $file['file_name'] = $filename;
+                            $file['uploader'] = $this->input->post('uploader');
+                            $query = $this->files_model->insertfile($file);
+                        } catch (Exception $e) {
+                            $this->session->set_flashdata('message', $e);
+                            redirect('document');
+                        }
+                        if ($query) {
+                            $this->session->set_flashdata('message', 'Document Successfully Uploaded!');
+                            redirect('document');
+                        } else {
+                            $this->session->set_flashdata('message', 'File uploaded but not inserted to database');
+                            redirect('document');
+                        }
+                    } else {
+                        $this->session->set_flashdata('message', 'Cannot upload file');
+                        redirect('document');
+                    }
+                }
+            }
+            echo "Data Inserted";
+        }
+    }
+
     public function download($id)
     {
         $this->load->helper('download');
