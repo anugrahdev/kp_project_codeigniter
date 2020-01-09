@@ -113,14 +113,19 @@
                     </button>
                 </div>
 
-                <form action="<?= base_url('menu/edit_menu/') . $m['id']; ?> " method="post">
+                <form action="<?= base_url('menu/edit_submenu/') . $m['id']; ?> " method="post">
                     <div class="modal-body">
                         <div class="form-group">
 
-                            <input type="text" class="form-control" id="menu" name="menu" placeholder="Role" value="<?= $m['title'] ?>">
+                            <input type="text" class="form-control" id="menu" name="title" placeholder="Role" value="<?= $m['title'] ?>">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="menu" name="menu" placeholder="Role" value="<?= $m['menu'] ?>">
+                            <select name="menu_id" id="menu_id" class="form-control">
+                                <option value="">Select Menu</option>
+                                <?php foreach ($menu as $x) : ?>
+                                    <option value="<?= $x['id']; ?>"><?= $x['menu']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" id="menu" name="menu" placeholder="Role" value="<?= $m['url'] ?>">
@@ -132,7 +137,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add</button>
+                        <button type="submit" class="btn btn-primary">Edit</button>
                     </div>
                 </form>
             </div>

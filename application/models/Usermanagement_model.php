@@ -30,4 +30,10 @@ class Usermanagement_model extends CI_Model
         $query = "SELECT * FROM user INNER JOIN fungsi ON user.fungsi = fungsi.id INNER JOIN bagian on user.bagian  = bagian.id WHERE role_id = 2";
         return $this->db->query($query);
     }
+
+    function edit_user($id, $name, $fungsi, $bagian)
+    {
+        $hasil = $this->db->query("UPDATE user SET name='$name',fungsi='$fungsi',bagian='$bagian' WHERE id='$id'");
+        return $hasil;
+    }
 }

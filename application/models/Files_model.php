@@ -24,6 +24,11 @@ class Files_model extends CI_Model
 		return $this->db->insert('document', $file);
 	}
 
+	// public function insertmultiple($filename, $desc, $pass, $uploader)
+	// {
+	// 	return $this->db->insert('document',)
+	// }
+
 	public function download($id)
 	{
 		$query = $this->db->get_where('document', array('id' => $id));

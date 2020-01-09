@@ -111,31 +111,6 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#fungsi').change(function() {
-            var id = $(this).val();
-            $.ajax({
-                url: "<?php echo site_url('Auth/get_bagian'); ?>",
-                method: "POST",
-                data: {
-                    id: id
-                },
-                async: true,
-                dataType: 'json',
-                success: function(data) {
-                    var html = '';
-                    var i;
-                    for (i = 0; i < data.length; i++) {
-                        html += '<option value=' + data[i].bagian_id + '>' + data[i].name + '</option>';
-                    }
-                    $('#bagian').html(html);
-                }
-            });
-            return false;
-        });
-    });
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
         $('#mytable').DataTable();
     });
 </script>
@@ -177,41 +152,52 @@
     };
 </script>
 
-<script>
-    $(document).ready(function() {
-        var i = 1;
-        $('#add').click(function() {
-            i++;
-            $('#dynamic_field').append('<tr id="row' + i + '"><td><div class="custom-file"><input type="file" class="custom-file-input name_list" name="upload[]" required><label class="custom-file-label" for="upload">Choose file</label></div></td><td><div class="form-group"><input class="form-control name_list" type="text" name="description" id="description" placeholder="Description"></div></td><td><div class="input-group" id="show_hide_password"><input class="form-control name_list" type="password" id="passwordfile" name="password" placeholder="Enter password"> <div class="input-group-addon"><a href=""><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></a></div></div> </td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td></tr>');
-        });
-        $(document).on('click', '.btn_remove', function() {
-            var button_id = $(this).attr("id");
-            $('#row' + button_id + '').remove();
-        });
-        $('#submit').click(function() {
-            $.ajax({
-                url: "<?= base_url('document/multiple'); ?>",
-                method: "POST",
-                data: $('#add_name').serialize(),
-                success: function(data) {
-                    alert(data);
-                    $('#add_name')[0].reset();
-                }
-            });
-        });
-    });
-</script>
-
 <script type="text/javascript">
     function add_row() {
-        $rowno = $("#employee_table tr").length;
+        $rowno = $("#multitable tr").length;
         $rowno = $rowno + 1;
-        $("#employee_table tr:last").after("<tr id='row" + $rowno + "'><td><div class='form-group'><div class='custom-file'><input type='file' class='custom-file-input' name='upload[]' required><label class='custom-file-label' for='upload'>Choose file</label></div></div></td><td><input class='form-control' type='text' name='description[]' placeholder='Enter Description'></td><td><input class='form-control' type='text' name='file_password[]' placeholder='Enter Password'><input type='hidden' name='uploader[]' placeholder='Enter Job' value='Anang'></td><td><input type='button' value='DELETE' onclick=delete_row('row" + $rowno + "')></td></tr>");
+        $("#multitable tr:last").after("<tr id='row" + $rowno + "'><td><input type='hidden' name='uploader[]'  value='<?= $user['email']; ?>'><input required type='file' multiple name='userfile[]' size='20' /></td><td><input required class='form-control' type='text' name='description[]' placeholder='Enter Description'></td><td><div class='input-group' id='show_hide_password'><input class='form-control' type='password' id='passwordfile' name='file_password[]' placeholder='you can leave this empty'><div class='input-group-addon'><a href=''><i class='fa fa-fw fa-eye-slash' aria-hidden='true'></i></a></div></div></td><td><input type='button' value='-' class='btn btn-danger' onclick=delete_row('row" + $rowno + "')></td></tr>");
+
     }
 
     function delete_row(rowno) {
         $('#' + rowno).remove();
     }
+</script>
+
+<script>
+    $(document).ready(function() { // Ketika halaman sudah siap (sudah selesai di load)
+        // Kita sembunyikan dulu untuk loadingnya
+        $("#loading").hide();
+
+        $("#fungsi").change(function() { // Ketika user mengganti atau memilih data provinsi
+            $("#bagian").hide(); // Sembunyikan dulu combobox kota nya
+            $("#loading").show(); // Tampilkan loadingnya
+
+            $.ajax({
+                type: "POST", // Method pengiriman data bisa dengan GET atau POST
+                url: "<?php echo base_url("admin/listBagian"); ?>", // Isi dengan url/path file php yang dituju
+                data: {
+                    id_fungsi: $("#fungsi").val()
+                }, // data yang akan dikirim ke file yang dituju
+                dataType: "json",
+                beforeSend: function(e) {
+                    if (e && e.overrideMimeType) {
+                        e.overrideMimeType("application/json;charset=UTF-8");
+                    }
+                },
+                success: function(response) { // Ketika proses pengiriman berhasil
+                    $("#loading").hide(); // Sembunyikan loadingnya
+                    // set isi dari combobox kota
+                    // lalu munculkan kembali combobox kotanya
+                    $("#bagian").html(response.list_bagian).show();
+                },
+                error: function(xhr, ajaxOptions, thrownError) { // Ketika ada error
+                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError); // Munculkan alert error
+                }
+            });
+        });
+    });
 </script>
 
 </body>

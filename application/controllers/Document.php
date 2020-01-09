@@ -50,30 +50,25 @@ class Document extends CI_Controller
             //Load upload library and initialize configuration
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
-
-            if ($this->upload->do_upload('upload')) {
-                try {
-                    $uploadData = $this->upload->data();
-                    $filename = $uploadData['file_name'];
-                    //set file data to insert to database
-                    $file['file_password'] = $this->input->post('password');
-                    $file['description'] = $this->input->post('description');
-                    $file['file_name'] = $filename;
-                    $file['uploader'] = $this->input->post('uploader');
-                    $query = $this->files_model->insertfile($file);
-                } catch (Exception $e) {
-                    $this->session->set_flashdata('message', $e);
-                    redirect('document');
-                }
-                if ($query) {
-                    $this->session->set_flashdata('message', 'Document Successfully Uploaded!');
-                    redirect('document');
-                } else {
-                    $this->session->set_flashdata('message', 'File uploaded but not inserted to database');
-                    redirect('document');
-                }
+            try {
+                $this->upload->do_upload('upload');
+                $uploadData = $this->upload->data();
+                $filename = $uploadData['file_name'];
+                //set file data to insert to database
+                $file['file_password'] = $this->input->post('password');
+                $file['description'] = $this->input->post('description');
+                $file['file_name'] = $filename;
+                $file['uploader'] = $this->input->post('uploader');
+                $query = $this->files_model->insertfile($file);
+            } catch (Exception $e) {
+                $this->session->set_flashdata('message', $e);
+                redirect('document');
+            }
+            if ($query) {
+                $this->session->set_flashdata('message', 'Document Successfully Uploaded!');
+                redirect('document');
             } else {
-                $this->session->set_flashdata('message', 'Cannot upload file');
+                $this->session->set_flashdata('message', 'File uploaded but not inserted to database');
                 redirect('document');
             }
         } else {
@@ -84,14 +79,60 @@ class Document extends CI_Controller
 
     public function multiple()
     {
-        $pass = $_POST['file_password'];
-        $desc = $_POST['description'];
-        $name = $_POST['file_name'];
-        $uploader = 'anang';
 
-        for ($i = 0; $i < count($name); $i++) {
-            $this->db->query("insert into document (file_name,description,file_password,uploader) values('$name[$i]','$desc[$i]','$pass[$i]','$uploader')");
+        //Load upload library and initialize configuration
+        $this->load->library('upload');
+        $files = $_FILES;
+        $file_name = $_FILES['userfile']['name'];
+        $desc = $this->input->post('description');
+        $pass = $this->input->post('file_password');
+        $uploader = $this->input->post('uploader');
+
+        $cpt = count($_FILES['userfile']['name']);
+        if (!empty($file_name)) {
+            for ($i = 0; $i < $cpt; $i++) {
+                try {
+                    $_FILES['userfile']['name'] = $files['userfile']['name'][$i];
+                    $_FILES['userfile']['type'] = $files['userfile']['type'][$i];
+                    $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];
+                    $_FILES['userfile']['error'] = $files['userfile']['error'][$i];
+                    $_FILES['userfile']['size'] = $files['userfile']['size'][$i];
+
+                    $this->upload->initialize($this->set_upload_options());
+                    $this->upload->do_upload();
+                    $uploadData = $this->upload->data();
+                    $filename = $uploadData['file_name'];
+
+                    $query = $this->db->query("insert into document (file_name,description,file_password,uploader) values('$filename','$desc[$i]','$pass[$i]','$uploader[$i]')");
+                } catch (Exception $e) {
+                    $this->session->set_flashdata('message', $e);
+                    redirect('document');
+                }
+            }
+            if ($query) {
+                $this->session->set_flashdata('message', 'Document Successfully Uploaded!');
+                redirect('document');
+            } else {
+                $this->session->set_flashdata('message', 'File uploaded but not inserted to database');
+                redirect('document');
+            }
+        } else {
+            $this->session->set_flashdata('message', 'Cannot upload empty file');
+            redirect('document');
         }
+    }
+
+    private function set_upload_options()
+    {
+        //upload an image options
+        $config = array();
+        $config['upload_path'] = 'assets/files/';
+        //restrict uploads to this mime types
+        $config['allowed_types'] = 'pdf';
+        $config['max_size'] = '100000';
+        $config['file_name'] = $_FILES['userfile']['name'];
+
+        return $config;
     }
 
     public function download($id)
@@ -150,19 +191,6 @@ class Document extends CI_Controller
         $this->m_barang->edit_barang($pw, $deskripsi);
         redirect('document');
     }
-
-    // public function view($filename)
-    // {
-    //     // The location of the PDF file 
-    //     // on the server 
-    //     $fileinfo = $this->files_model->viewbyname($filename);
-    //     $file = 'assets/files/' . $fileinfo['file_name'];
-    //     // Header content type 
-    //     header("Content-type: application/pdf");
-    //     header("Content-Length: " . filesize($file));
-    //     // Send the file to the browser. 
-    //     readfile($file);
-    // }
 
     public function view($filename)
     {

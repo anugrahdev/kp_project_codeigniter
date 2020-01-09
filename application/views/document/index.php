@@ -110,33 +110,42 @@
                 </button>
             </div>
 
-            <form action="<?= base_url('document/multiple'); ?>" method="post" enctype="multipart/form-data">
-                <div class="modal-body">
+            <?php echo form_open_multipart('document/multiple'); ?>
+            <div class="modal-body">
 
-                    <div class="table-responsive">
-                        <table id="employee_table" class="table table-borderless">
-                            <tr id="row1">
-                                <td>
-                                    <div class='form-group'>
-                                        <div class='custom-file'>
-                                            <input type='file' class='custom-file-input' name='upload[]' required>
-                                            <label class='custom-file-label' for='upload'>Choose file</label>
-                                        </div>
+                <div class="table-responsive">
+                    <table id="multitable" class="table table-borderless">
+                        <tr id="row1">
+                            <td>
+                            <label for='upload'>File</label>
+                                <input type="file" id="upload" class="form-control-file" multiple name="userfile[]" required/>
+                            </td>
+                            <td><label for='description'>Description</label>
+                                <input class='form-control' id='description' type='text' name='description[]' placeholder='Enter Description' size='30' required>
+                                <input type='hidden' name='uploader[]' value='<?= $user['email'] ?>'>
+                            </td>
+                            <!-- <td><input class="form-control" type="text" name="file_password[]" placeholder="Enter Password">
+                            </td> -->
+                            <td>
+                            <label for='passwordfile'>Password</label>
+                                <div class='input-group' id='show_hide_password'>
+                                    <input class='form-control' type='password' id='passwordfile' name='file_password[]' placeholder='you can leave this empty'>
+                                    <div class='input-group-addon'>
+                                        <a href=''><i class='fa fa-fw fa-eye-slash' aria-hidden='true'></i></a>
                                     </div>
-                                </td>
-                                <td><input class='form-control' type='text' name='description[]' placeholder='Enter Description'></td>
-                                <td><input class="form-control" type="text" name="file_password[]" placeholder="Enter Job"></td>
-                                <td> <input type="button" onclick="add_row();" value="ADD ROW">
-                                    <input type='hidden' name='uploader[]' placeholder='Enter Job' value='Anang'></td>
-                            </tr>
-                        </table>
+                                </div>
+                            </td>
+                            <td><input style='margin-top : 32.5px;' type="button" onclick="add_row();" value="+" class="btn btn-success">
+                            </td>
+                        </tr>
+                    </table>
 
-                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" name="submit_row" value="SUBMIT" class="btn btn-primary">
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" name="submit_row" value="SUBMIT" class="btn btn-primary">
+            </div>
             </form>
         </div>
     </div>

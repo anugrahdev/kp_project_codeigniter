@@ -9,6 +9,9 @@ class Admin extends CI_Controller
         parent::__construct();
         is_login();
         $this->load->model('usermanagement_model');
+        $this->load->model('Fungsibagian_model', 'fungsibagian_model');
+        $this->load->model('fungsi_model');
+        $this->load->model('bagian_model');
     }
     public function index()
     {
@@ -23,6 +26,25 @@ class Admin extends CI_Controller
         $this->load->view('templates/topbar', $data);
         $this->load->view('admin/index', $data);
         $this->load->view('templates/footer', $data);
+    }
+
+    public function listBagian()
+    {
+        // Ambil data ID Provinsi yang dikirim via ajax post
+        $id_fungsi = $this->input->post('id_fungsi');
+
+        $bagian = $this->bagian_model->viewByFungsi($id_fungsi);
+
+        // Buat variabel untuk menampung tag-tag option nya
+        // Set defaultnya dengan tag option Pilih
+        $lists = "<option value=''>No Selected</option>";
+
+        foreach ($bagian as $data) {
+            $lists .= "<option  value='" . $data->id . "'>" . $data->bagian_name . "</option>"; // Tambahkan tag option ke variabel $lists
+        }
+
+        $callback = array('list_bagian' => $lists); // Masukan variabel lists tadi ke dalam array $callback dengan index array : list_kota
+        echo json_encode($callback); // konversi varibael $callback menjadi JSON
     }
 
     public function count()
@@ -124,6 +146,7 @@ class Admin extends CI_Controller
         $this->session->userdata('email')])->row_array();
 
         $data['user_data'] = $this->usermanagement_model->get_users();
+        $data['fungsi_data'] = $this->fungsi_model->view();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -131,8 +154,16 @@ class Admin extends CI_Controller
         $this->load->view('templates/footer', $data);
     }
 
-    public function edit_user()
+    public function edit_user($id)
     {
+        // $name = $this->input->post('name');
+        // $fungsi = $this->input->post('fungsi');
+        // $bagian = $this->input->post('bagian');
+        // $query = $this->db->query("UPDATE user SET name='$name',fungsi='$fungsi',bagian='$bagian' WHERE id='$id'");
+        // if ($query) {
+        //     $this->session->set_flashdata('message', 'User Edited!');
+        // }
+        // redirect('admin/user_management');
     }
 
     public function delete_user($email)

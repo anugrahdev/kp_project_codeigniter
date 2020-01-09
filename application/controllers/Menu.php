@@ -7,6 +7,7 @@ class Menu extends CI_Controller
     {
         parent::__construct();
         is_login();
+        $this->load->model('Menu_model');
     }
     public function index()
     {
@@ -43,6 +44,18 @@ class Menu extends CI_Controller
 
     public function edit_submenu($id)
     {
+        $title = $this->input->post('title');
+        $menu_id = $this->input->post('menu_id');
+        $url = $this->input->post('url');
+        $icon = $this->input->post('icon');
+
+        $edit = $this->Menu_model->edit_submenu($id, $title, $menu_id, $url, $icon);
+        if ($edit) {
+            $this->session->set_flashdata('message', 'SubMenu Edited!');
+            redirect('menu/submenu');
+        } else {
+            $this->session->set_flashdata('message', 'Failed to Edit');
+        }
     }
 
     public function subMenu()
