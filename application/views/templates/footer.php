@@ -60,7 +60,6 @@
     $('.form-check-input').on('click', function() {
         const menuId = $(this).data('menu');
         const roleId = $(this).data('role');
-
         $.ajax({
             url: "<?= base_url('admin/changeaccess'); ?>",
             type: 'post',
@@ -73,17 +72,13 @@
             }
         });
     });
-
     $('.custom-file-input').on('change', function() {
         let fileName = $(this).val().split('\\').pop();
         $(this).next('.custom-file-label').addClass("selected").html(fileName);
     });
-
-
     $(document).ready(function() {
         $('#example').DataTable();
     });
-
     //sweetalert
     const flashData = $('.flash-data').data('flashdata');
     // console.log(flashData);
@@ -94,7 +89,6 @@
             icon: 'success'
         });
     }
-
     //sw tombolhapus
     $('.tombol-hapus').on('click', function(e) {
         e.preventDefault();
@@ -117,7 +111,6 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-
         $('#fungsi').change(function() {
             var id = $(this).val();
             $.ajax({
@@ -129,19 +122,16 @@
                 async: true,
                 dataType: 'json',
                 success: function(data) {
-
                     var html = '';
                     var i;
                     for (i = 0; i < data.length; i++) {
                         html += '<option value=' + data[i].bagian_id + '>' + data[i].name + '</option>';
                     }
                     $('#bagian').html(html);
-
                 }
             });
             return false;
         });
-
     });
 </script>
 <script type="text/javascript">
@@ -216,7 +206,7 @@
     function add_row() {
         $rowno = $("#employee_table tr").length;
         $rowno = $rowno + 1;
-        $("#employee_table tr:last").after("<tr id='row" + $rowno + "'><td><input type='text' name='file_name[]' placeholder='Enter Name'></td><td><input type='text' name='description[]' placeholder='Enter Age'></td><td><input type='text' name='file_password[]' placeholder='Enter Job'></td><td><input type='button' value='DELETE' onclick=delete_row('row" + $rowno + "')></td></tr>");
+        $("#employee_table tr:last").after("<tr id='row" + $rowno + "'><td><div class='form-group'><div class='custom-file'><input type='file' class='custom-file-input' name='upload[]' required><label class='custom-file-label' for='upload'>Choose file</label></div></div></td><td><input class='form-control' type='text' name='description[]' placeholder='Enter Description'></td><td><input class='form-control' type='text' name='file_password[]' placeholder='Enter Password'><input type='hidden' name='uploader[]' placeholder='Enter Job' value='Anang'></td><td><input type='button' value='DELETE' onclick=delete_row('row" + $rowno + "')></td></tr>");
     }
 
     function delete_row(rowno) {

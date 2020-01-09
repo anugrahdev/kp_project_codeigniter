@@ -114,21 +114,28 @@
                 <div class="modal-body">
 
                     <div class="table-responsive">
-                        <table id="employee_table">
+                        <table id="employee_table" class="table table-borderless">
                             <tr id="row1">
-                                <td><input type="text" name="file_name[]" placeholder="Enter Name"></td>
-                                <td><input type="text" name="description[]" placeholder="Enter Age"></td>
-                                <td><input type="text" name="file_password[]" placeholder="Enter Job"></td>
-                                <td><input type="hidden" name="uploader" placeholder="Enter Job" value="Anang"></td>
+                                <td>
+                                    <div class='form-group'>
+                                        <div class='custom-file'>
+                                            <input type='file' class='custom-file-input' name='upload[]' required>
+                                            <label class='custom-file-label' for='upload'>Choose file</label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><input class='form-control' type='text' name='description[]' placeholder='Enter Description'></td>
+                                <td><input class="form-control" type="text" name="file_password[]" placeholder="Enter Job"></td>
+                                <td> <input type="button" onclick="add_row();" value="ADD ROW">
+                                    <input type='hidden' name='uploader[]' placeholder='Enter Job' value='Anang'></td>
                             </tr>
                         </table>
-                        <input type="button" onclick="add_row();" value="ADD ROW">
-                        <input type="submit" name="submit_row" value="SUBMIT">
+
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" name="submit" id="submit" class="btn btn-primary">Upload</button>
+                    <input type="submit" name="submit_row" value="SUBMIT" class="btn btn-primary">
                 </div>
             </form>
         </div>
