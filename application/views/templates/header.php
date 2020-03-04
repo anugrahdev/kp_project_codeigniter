@@ -18,6 +18,7 @@
     <!-- Custom styles for this template-->
     <link href="<?= base_url('assets') ?>/css/sb-admin-2.css" rel="stylesheet">
     <link type="text/css" href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=Hind:700&display=swap" rel="stylesheet">
 
 
     <!-- DATATABLE -->

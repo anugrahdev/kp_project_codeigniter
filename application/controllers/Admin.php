@@ -38,7 +38,6 @@ class Admin extends CI_Controller
         // Buat variabel untuk menampung tag-tag option nya
         // Set defaultnya dengan tag option Pilih
         $lists = "<option value=''>No Selected</option>";
-
         foreach ($bagian as $data) {
             $lists .= "<option  value='" . $data->id . "'>" . $data->bagian_name . "</option>"; // Tambahkan tag option ke variabel $lists
         }
@@ -82,16 +81,12 @@ class Admin extends CI_Controller
         $data['title'] = 'Role';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
-
         $data['role'] = $this->db->get_where(
             'user_role',
             ['id' => $role_id]
         )->row_array();
-
         $this->db->where('id!=', 1);
         $data['menu'] = $this->db->get('user_menu')->result_array();
-
-
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -110,7 +105,6 @@ class Admin extends CI_Controller
 
     public function edit_role($role_id)
     {
-
         $role = $this->input->post('role');
         $this->db->set('role', $role);
         $this->db->where('id', $role_id);

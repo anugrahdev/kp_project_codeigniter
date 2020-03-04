@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
 class Document extends CI_Controller
 {
     function  __construct()
@@ -37,9 +36,7 @@ class Document extends CI_Controller
     }
     public function insert()
     {
-
         //load session library to use flashdata
-
         //Check if file is not empty
         if (!empty($_FILES['upload']['name'])) {
             $config['upload_path'] = 'assets/files';
@@ -76,10 +73,8 @@ class Document extends CI_Controller
             redirect('document');
         }
     }
-
     public function multiple()
     {
-
         //Load upload library and initialize configuration
         $this->load->library('upload');
         $files = $_FILES;
@@ -87,7 +82,6 @@ class Document extends CI_Controller
         $desc = $this->input->post('description');
         $pass = $this->input->post('file_password');
         $uploader = $this->input->post('uploader');
-
         $cpt = count($_FILES['userfile']['name']);
         if (!empty($file_name)) {
             for ($i = 0; $i < $cpt; $i++) {
@@ -97,12 +91,10 @@ class Document extends CI_Controller
                     $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];
                     $_FILES['userfile']['error'] = $files['userfile']['error'][$i];
                     $_FILES['userfile']['size'] = $files['userfile']['size'][$i];
-
                     $this->upload->initialize($this->set_upload_options());
                     $this->upload->do_upload();
                     $uploadData = $this->upload->data();
                     $filename = $uploadData['file_name'];
-
                     $query = $this->db->query("insert into document (file_name,description,file_password,uploader) values('$filename','$desc[$i]','$pass[$i]','$uploader[$i]')");
                 } catch (Exception $e) {
                     $this->session->set_flashdata('message', $e);
