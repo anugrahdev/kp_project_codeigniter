@@ -2,7 +2,13 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+    <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#adduserModal">Add User</a>
     <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
+    <?php if (validation_errors()) : ?>
+        <div class="alert alert-danger">
+            <?php echo validation_errors(); ?>
+        </div>
+    <?php endif; ?>
 
     <div class="row">
         <div class="col-lg-12">
@@ -61,7 +67,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="<?= base_url('admin/edit_user/') . $m['id']; ?> " method="post">
+                <form action="<?= base_url('admin/edit_user/') . $m['email']; ?> " method="post">
                     <div class="modal-body">
                         <div class="form-group">
                             <center><img src="<?= base_url('assets/img/profile/') . $m['image']; ?>" width="150px" height="180px" style="object-fit: cover"></center>
@@ -85,7 +91,11 @@
                                 <div class="form-group col-6">
                                     <label>Bagian</label>
                                     <select class="form-control" id="bagian" name="bagian" required>
-                                        <option>No Selected</option>
+                                        <?php
+                                        foreach ($bagian_data as $data) : ?>
+                                            <option <?php if ($m['bagian'] == $data->id) echo 'selected'; ?> value="<?= $data->id ?>"><?= $data->bagian_name ?></option>
+                                        <?php endforeach; ?>
+                                        ?>
 
                                     </select>
                                     <div id="loading" style="margin-top: 15px;">
@@ -113,3 +123,68 @@
 
 
 <?php endforeach; ?>
+
+
+<!-- Modal -->
+<div class="modal fade" id="adduserModal" tabindex="-1" role="dialog" aria-labelledby="adduserModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="user" method="post" action="<?= base_url('admin/registration') ?>">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-user" id="name" placeholder="Full Name" name="name" value="<?= set_value('name'); ?>">
+                        <?= form_error('name', '<small class="text-danger pl-3" >', '</small>'); ?>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-user" id="email" name="email" placeholder="Email Address" value="<?= set_value('email'); ?>">
+                        <?= form_error('email', '<small class="text-danger pl-3" >', '</small>'); ?>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label style="margin-left: 8.5px">Fungsi</label>
+                            <select class="form-control" name="fungsi" id="fungsi1" required>
+                                <option value="">No Selected</option>
+
+                                <?php
+                                foreach ($fungsi_data as $data) { // Lakukan looping pada variabel siswa dari controller
+                                    echo "<option value='" . $data->id . "'>" . $data->fungsi_name . "</option>";
+                                }
+                                ?>
+
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label>Bagian</label>
+                            <select class="form-control" id="bagian1" name="bagian" required>
+                                <option>No Selected</option>
+
+                            </select>
+                            <div id="loading1" style="margin-top: 15px;">
+                                <img src="<?= base_url('assets/img/'); ?>loading.gif" width="18"> <small>Loading...</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="password" name="password1" class="form-control form-control-user" id="password1" placeholder="Password">
+                            <?= form_error('password1', '<small class="text-danger pl-3" >', '</small>'); ?>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="password" name="password2" class="form-control form-control-user" id="password2" placeholder="Repeat Password">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

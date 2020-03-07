@@ -6,7 +6,6 @@
     <div class="row">
         <div class="col-lg-6">
             <div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
-
             <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">Add Role</a>
             <table class="table table-hover">
                 <thead>

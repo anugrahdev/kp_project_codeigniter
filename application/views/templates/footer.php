@@ -164,7 +164,6 @@
         $('#' + rowno).remove();
     }
 </script>
-
 <script>
     $(document).ready(function() { // Ketika halaman sudah siap (sudah selesai di load)
         // Kita sembunyikan dulu untuk loadingnya
@@ -176,7 +175,7 @@
 
             $.ajax({
                 type: "POST", // Method pengiriman data bisa dengan GET atau POST
-                url: "<?php echo base_url("admin/listBagian"); ?>", // Isi dengan url/path file php yang dituju
+                url: "<?php echo base_url("auth/listBagian"); ?>", // Isi dengan url/path file php yang dituju
                 data: {
                     id_fungsi: $("#fungsi").val()
                 }, // data yang akan dikirim ke file yang dituju
@@ -199,6 +198,42 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function() { // Ketika halaman sudah siap (sudah selesai di load)
+        // Kita sembunyikan dulu untuk loadingnya
+        $("#loading1").hide();
+
+        $("#fungsi1").change(function() { // Ketika user mengganti atau memilih data provinsi
+            $("#bagian1").hide(); // Sembunyikan dulu combobox kota nya
+            $("#loading1").show(); // Tampilkan loadingnya
+
+            $.ajax({
+                type: "POST", // Method pengiriman data bisa dengan GET atau POST
+                url: "<?php echo base_url("auth/listBagian"); ?>", // Isi dengan url/path file php yang dituju
+                data: {
+                    id_fungsi: $("#fungsi1").val()
+                }, // data yang akan dikirim ke file yang dituju
+                dataType: "json",
+                beforeSend: function(e) {
+                    if (e && e.overrideMimeType) {
+                        e.overrideMimeType("application/json;charset=UTF-8");
+                    }
+                },
+                success: function(response) { // Ketika proses pengiriman berhasil
+                    $("#loading1").hide(); // Sembunyikan loadingnya
+                    // set isi dari combobox kota
+                    // lalu munculkan kembali combobox kotanya
+                    $("#bagian1").html(response.list_bagian).show();
+                },
+                error: function(xhr, ajaxOptions, thrownError) { // Ketika ada error
+                    alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError); // Munculkan alert error
+                }
+            });
+        });
+    });
+</script>
+
 
 </body>
 

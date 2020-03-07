@@ -27,21 +27,17 @@ class Admin extends CI_Controller
         $this->load->view('admin/index', $data);
         $this->load->view('templates/footer', $data);
     }
-
     public function listBagian()
     {
         // Ambil data ID Provinsi yang dikirim via ajax post
         $id_fungsi = $this->input->post('id_fungsi');
-
         $bagian = $this->bagian_model->viewByFungsi($id_fungsi);
-
         // Buat variabel untuk menampung tag-tag option nya
         // Set defaultnya dengan tag option Pilih
         $lists = "<option value=''>No Selected</option>";
         foreach ($bagian as $data) {
             $lists .= "<option  value='" . $data->id . "'>" . $data->bagian_name . "</option>"; // Tambahkan tag option ke variabel $lists
         }
-
         $callback = array('list_bagian' => $lists); // Masukan variabel lists tadi ke dalam array $callback dengan index array : list_kota
         echo json_encode($callback); // konversi varibael $callback menjadi JSON
     }
@@ -141,6 +137,7 @@ class Admin extends CI_Controller
 
         $data['user_data'] = $this->usermanagement_model->get_users();
         $data['fungsi_data'] = $this->fungsi_model->view();
+        $data['bagian_data'] = $this->fungsi_model->bagianview();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -148,16 +145,16 @@ class Admin extends CI_Controller
         $this->load->view('templates/footer', $data);
     }
 
-    public function edit_user($id)
+    public function edit_user($email)
     {
-        // $name = $this->input->post('name');
-        // $fungsi = $this->input->post('fungsi');
-        // $bagian = $this->input->post('bagian');
-        // $query = $this->db->query("UPDATE user SET name='$name',fungsi='$fungsi',bagian='$bagian' WHERE id='$id'");
-        // if ($query) {
-        //     $this->session->set_flashdata('message', 'User Edited!');
-        // }
-        // redirect('admin/user_management');
+        $name = $this->input->post('name');
+        $fungsi = $this->input->post('fungsi');
+        $bagian = $this->input->post('bagian');
+        $query = $this->db->query("UPDATE user SET name='$name',fungsi=$fungsi,bagian=$bagian WHERE email='$email'");
+        if ($query) {
+            $this->session->set_flashdata('message', 'User Edited!');
+        }
+        redirect('admin/user_management');
     }
 
     public function delete_user($email)
@@ -174,5 +171,44 @@ class Admin extends CI_Controller
         $data['title'] = 'Fungsi & Bagian Management';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
+    }
+
+    public function registration()
+    {
+
+        $this->form_validation->set_rules('name', 'Name', 'required|trim');
+        $this->form_validation->set_rules('email', 'Email ', 'required|trim|valid_email|is_unique[user.email]', ['is_unique' => 'Email already taken']);
+        $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[6]|matches[password2]', ['matches' => 'password not match!', 'min_length' => 'Password too short!']);
+        $this->form_validation->set_rules('password2', 'Password', 'required|trim|min_length[6]|matches[password1]');
+        $data['fungsi_data'] = $this->fungsi_model->view();
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'User Management';
+            $data['user'] = $this->db->get_where('user', ['email' =>
+            $this->session->userdata('email')])->row_array();
+
+            $data['user_data'] = $this->usermanagement_model->get_users();
+            $data['fungsi_data'] = $this->fungsi_model->view();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('admin/usermanagement', $data);
+            $this->load->view('templates/footer', $data);
+        } else {
+            $email = $this->input->post('email', true);
+            $data = [
+                'name' => htmlspecialchars($this->input->post('name', true)),
+                'email' => htmlspecialchars($email),
+                'image' => 'default.png',
+                'fungsi' => $this->input->post('fungsi'),
+                'bagian' => $this->input->post('bagian'),
+                'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
+                'role_id' => 2,
+                'is_active' => 0,
+                'date_created' => time()
+            ];
+            $this->db->insert('user', $data);
+            $this->session->set_flashdata('message', 'New User Successfully Created!');
+            redirect('admin/user_management');
+        }
     }
 }
