@@ -37,7 +37,8 @@
                             <td><?= $m['bagian_name'];  ?></td>
                             <td><?= date('d F Y', $m['date_created']); ?></td>
                             <td>
-                                <a href="" class="badge badge-warning" data-toggle="modal" data-target="#editmodal<?= $i; ?>">Edit</a>
+                                <!-- <a href="" class="badge badge-warning" data-toggle="modal" data-target="#editmodal<?= $i; ?>">Edit</a> -->
+                                <a href="<?= base_url('admin/edit_user/' . $m['email']); ?>" class="badge badge-warning">Edit</a>
                                 <a href="<?php echo base_url() . 'admin/delete_user/' . $m['email']; ?>" class="badge badge-danger tombol-hapus">Delete</a>
                             </td>
                         </tr>

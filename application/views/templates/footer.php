@@ -156,7 +156,7 @@
     function add_row() {
         $rowno = $("#multitable tr").length;
         $rowno = $rowno + 1;
-        $("#multitable tr:last").after("<tr id='row" + $rowno + "'><td><input type='hidden' name='uploader[]'  value='<?= $user['email']; ?>'><input required type='file' multiple name='userfile[]' size='20' /></td><td><input required class='form-control' type='text' name='description[]' placeholder='Enter Description'></td><td><div class='input-group' id='show_hide_password'><input class='form-control' type='password' id='passwordfile' name='file_password[]' placeholder='you can leave this empty'><div class='input-group-addon'><a href=''><i class='fa fa-fw fa-eye-slash' aria-hidden='true'></i></a></div></div></td><td><input type='button' value='-' class='btn btn-danger' onclick=delete_row('row" + $rowno + "')></td></tr>");
+        $("#multitable tr:last").after("<tr id='row" + $rowno + "'><td><input type='hidden' name='uploader[]'  value='<?= $user['email']; ?>'><input required type='file' multiple name='userfile[]' size='20' /></td><td><input class='form-control' type='text' name='description[]' placeholder='Enter Description'></td><td><div class='input-group' id='show_hide_password'><input class='form-control' type='password' id='passwordfile' name='file_password[]' placeholder='you can leave this empty'><div class='input-group-addon'><a href=''><i class='fa fa-fw fa-eye-slash' aria-hidden='true'></i></a></div></div></td><td><input type='button' value='-' class='btn btn-danger' onclick=delete_row('row" + $rowno + "')></td></tr>");
 
     }
 

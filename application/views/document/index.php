@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Description" required></textarea>
+                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Description"></textarea>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
@@ -87,7 +87,6 @@
                     <div class="form-group">
                         <input type="hidden" value="<?= $user['email'] ?>" name="uploader">
                     </div>
-                    <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-file-upload"></i> MULTI UPLOAD</a>
 
                 </div>
                 <div class="modal-footer">
@@ -117,17 +116,17 @@
                     <table id="multitable" class="table table-borderless">
                         <tr id="row1">
                             <td>
-                            <label for='upload'>File</label>
-                                <input type="file" id="upload" class="form-control-file" multiple name="userfile[]" required/>
+                                <label for='upload'>File</label>
+                                <input type="file" id="upload" class="form-control-file" multiple name="userfile[]" required />
                             </td>
                             <td><label for='description'>Description</label>
-                                <input class='form-control' id='description' type='text' name='description[]' placeholder='Enter Description' size='30' required>
+                                <input class='form-control' id='description' type='text' name='description[]' placeholder='Enter Description' size='30'>
                                 <input type='hidden' name='uploader[]' value='<?= $user['email'] ?>'>
                             </td>
                             <!-- <td><input class="form-control" type="text" name="file_password[]" placeholder="Enter Password">
                             </td> -->
                             <td>
-                            <label for='passwordfile'>Password</label>
+                                <label for='passwordfile'>Password</label>
                                 <div class='input-group' id='show_hide_password'>
                                     <input class='form-control' type='password' id='passwordfile' name='file_password[]' placeholder='you can leave this empty'>
                                     <div class='input-group-addon'>

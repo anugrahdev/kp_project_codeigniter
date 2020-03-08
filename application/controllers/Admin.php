@@ -134,10 +134,10 @@ class Admin extends CI_Controller
         $data['title'] = 'User Management';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
-
-        $data['user_data'] = $this->usermanagement_model->get_users();
         $data['fungsi_data'] = $this->fungsi_model->view();
         $data['bagian_data'] = $this->fungsi_model->bagianview();
+        $data['user_data'] = $this->usermanagement_model->get_users();
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -146,6 +146,21 @@ class Admin extends CI_Controller
     }
 
     public function edit_user($email)
+    {
+        $data['title'] = 'User Edit';
+        $data['fungsi_data'] = $this->fungsi_model->view();
+        $data['bagian_data'] = $this->fungsi_model->bagianview();
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $data['m'] = $this->db->get_where('user', ['email' => $email])->row_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/edituser', $data);
+        $this->load->view('templates/footer', $data);
+    }
+
+    public function edit_action($email)
     {
         $name = $this->input->post('name');
         $fungsi = $this->input->post('fungsi');
@@ -156,6 +171,8 @@ class Admin extends CI_Controller
         }
         redirect('admin/user_management');
     }
+
+
 
     public function delete_user($email)
     {
