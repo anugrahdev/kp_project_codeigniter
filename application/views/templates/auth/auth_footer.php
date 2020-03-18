@@ -20,6 +20,9 @@
  <script src="<?= base_url('assets/loginregister/'); ?>js/scripts.js"></script>
  <script src="<?= base_url('assets/loginregister/'); ?>js/custom.js"></script>
 
+
+ <!-- JS UNTUK MENAMPILKAN BAGIAN BERDASARKAN FUNGSI PADA REGISTER -->
+
  <script>
      $(document).ready(function() { // Ketika halaman sudah siap (sudah selesai di load)
          // Kita sembunyikan dulu untuk loadingnya

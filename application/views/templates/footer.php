@@ -108,13 +108,19 @@
         })
     });
 </script>
+<!-- END OF sweetalert 2 -->
 
+
+<!-- JS DataTable -->
 <script type="text/javascript">
     $(document).ready(function() {
         $('#mytable').DataTable();
     });
 </script>
-<script>
+<!-- END JS DataTable -->
+
+
+<!-- <script>
     function myFunction() {
         var x = document.getElementById("myInput");
         if (x.type === "password") {
@@ -123,13 +129,17 @@
             x.type = "password";
         }
     }
-</script>
+</script> -->
 
+<!-- JS  Protect file with password ? -->
 <script>
     document.getElementById('pw').onchange = function() {
         document.getElementById('passwordfile').disabled = !this.checked;
     };
 </script>
+<!-- END JS  Protect file with password ? -->
+
+<!-- JS  SHOW HIDE PASSWORD -->
 <script>
     $(document).ready(function() {
         $("#show_hide_password a").on('click', function(event) {
@@ -146,12 +156,16 @@
         });
     });
 </script>
+<!-- END JS  SHOW HIDE PASSWORD -->
+
+
 <script>
     document.getElementById('pw_edit').onchange = function() {
         document.getElementById('myInput').disabled = !this.checked;
     };
 </script>
 
+<!-- JS untuk menambahkan dynamic input row -->
 <script type="text/javascript">
     function add_row() {
         $rowno = $("#multitable tr").length;
@@ -164,6 +178,9 @@
         $('#' + rowno).remove();
     }
 </script>
+<!-- END JS untuk menambahkan dynamic input row -->
+
+<!-- JS UNTUK MENAMPILKAN BAGIAN BERDASARKAN FUNGSI -->
 <script>
     $(document).ready(function() { // Ketika halaman sudah siap (sudah selesai di load)
         // Kita sembunyikan dulu untuk loadingnya
@@ -198,7 +215,9 @@
         });
     });
 </script>
+<!-- END JS UNTUK MENAMPILKAN BAGIAN BERDASARKAN FUNGSI -->
 
+<!-- JS UNTUK MENAMPILKAN BAGIAN BERDASARKAN FUNGSI PADA EDIT USER -->
 <script>
     $(document).ready(function() { // Ketika halaman sudah siap (sudah selesai di load)
         // Kita sembunyikan dulu untuk loadingnya
@@ -233,6 +252,7 @@
         });
     });
 </script>
+<!-- END JS UNTUK MENAMPILKAN BAGIAN BERDASARKAN FUNGSI PADA EDIT USER -->
 
 
 </body>

@@ -1,4 +1,6 @@
 <?php
+
+// INI FUNGSI UNTUK MENGECEK LOGIN ?
 function is_login()
 {
     $ci = get_instance();
@@ -23,6 +25,11 @@ function is_login()
     }
 }
 
+// END INI FUNGSI UNTUK MENGECEK LOGIN ?
+
+
+// INI FUNGSI UNTUK MENGECEK ACCESS ?
+
 function check_access($role_id, $menu_id)
 {
     $ci = get_instance();
@@ -33,3 +40,4 @@ function check_access($role_id, $menu_id)
         return "checked='checked'";
     }
 }
+// END INI FUNGSI UNTUK MENGECEK ACCESS ?

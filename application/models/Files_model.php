@@ -53,7 +53,7 @@ class Files_model extends CI_Model
 		return $hasil;
 	}
 
-	function getpassword($filename)
+	function getp($filename)
 	{
 		$query = $this->db->get_where('document', array('file_name' => $filename));
 		return $query->row_array();

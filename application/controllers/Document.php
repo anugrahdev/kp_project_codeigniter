@@ -127,17 +127,17 @@ class Document extends CI_Controller
         return $config;
     }
 
-    public function download($id)
-    {
-        $this->load->helper('download');
-        $fileinfo = $this->files_model->download($id);
-        $file = 'assets/files/' . $fileinfo['file_name'];
-        force_download($file, NULL);
-    }
+    // public function download($id)
+    // {
+    //     $this->load->helper('download');
+    //     $fileinfo = $this->files_model->download($id);
+    //     $file = 'assets/files/' . $fileinfo['file_name'];
+    //     force_download($file, NULL);
+    // }
 
     public function download_secure($filename)
     {
-        $fileinfo = $this->files_model->getpassword($filename);
+        $fileinfo = $this->files_model->getp($filename);
         // $file = 'assets/files/' . $fileinfo['file_name'];
         $path = FCPATH . "assets/files/" . $filename;
         $watermarkText = FCPATH . 'assets/img/logogs.png';
